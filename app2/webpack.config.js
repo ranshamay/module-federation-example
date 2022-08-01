@@ -46,7 +46,5 @@ module.exports = {
 };
 
 function getRemoteEntryUrl(port) {
-  const { HOSTNAME = "" } = process.env;
-
   return `//localhost:${port}/remoteEntry.js`;
 }
