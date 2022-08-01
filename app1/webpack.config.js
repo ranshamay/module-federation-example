@@ -2,6 +2,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ModuleFederationPlugin =
   require("webpack").container.ModuleFederationPlugin;
 const path = require("path");
+const deps = require("./package.json").dependencies;
 
 module.exports = {
   entry: "./src/index",
@@ -33,8 +34,13 @@ module.exports = {
       remotes: {
         app2: `app2@${getRemoteEntryUrl(3002)}`,
         app3: `app3@${getRemoteEntryUrl(3003)}`,
+        "@core":
+          "core@https://agoras-df-dm-capp.wittybay-a2ac6d2d.centralus.azurecontainerapps.io/_next/static/chunks/remoteEntry.js",
       },
-      shared: { react: { singleton: true }, "react-dom": { singleton: true } },
+      shared: {
+        react: { singleton: true, requiredVersion: deps["react-dom"] },
+        "react-dom": { singleton: true, requiredVersion: deps["react-dom"] },
+      },
     }),
     new HtmlWebpackPlugin({
       template: "./public/index.html",
