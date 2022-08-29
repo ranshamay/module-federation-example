@@ -12,7 +12,7 @@ const App = () => (
     <React.Suspense fallback="Loading Button Container">
       {/* <RemoteButtonContainer /> */}
       {/* <RemoteButton /> */}
-      <RemoteHeader />
+      <RemoteHeader endpointUrl="https://agoras-pr-dm-capp--2022082818.nicedesert-1f4330ea.centralus.azurecontainerapps.io" />
     </React.Suspense>
   </div>
 );

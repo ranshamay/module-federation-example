@@ -35,7 +35,7 @@ module.exports = {
         app2: `app2@${getRemoteEntryUrl(3002)}`,
         app3: `app3@${getRemoteEntryUrl(3003)}`,
         "@core":
-          "core@https://agoras-df-dm-capp.wittybay-a2ac6d2d.centralus.azurecontainerapps.io/_next/static/chunks/remoteEntry.js",
+          "core@https://agoras-pr-dm-capp--2022082818.nicedesert-1f4330ea.centralus.azurecontainerapps.io/_next/static/chunks/remoteEntry.js",
       },
       shared: {
         react: { singleton: true, requiredVersion: deps["react-dom"] },
