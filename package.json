@@ -1,10 +1,14 @@
 {
   "private": true,
   "scripts": {
-    "start": "npx concurrently \"cd ./app1 && npm start\" \"cd ./app2 && npm start\" \"cd ./app3 && npm start\"",
-    "install": "npx concurrently \"cd ./app1 && npm i\" \"cd ./app2 && npm i\" \"cd ./app3 && npm i\""
+    "install": "npx concurrently \"cd ./csr && npm i\" \"cd ./csrssr && npm i\"",
+    "start:csr": "npx concurrently \"cd ./csr && npm start\"",
+    "start:csrssr": "npx concurrently \"cd ./csr_ssr && npm start\""
   },
   "devDependencies": {
     "concurrently": "^7.3.0"
+  },
+  "dependencies": {
+    "webpack-dev-server": "^4.11.0"
   }
 }
