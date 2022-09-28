@@ -11,7 +11,7 @@ module.exports = {
     static: {
       directory: path.join(__dirname, "dist"),
     },
-    port: 3001,
+    port: 3004,
   },
   output: {
     publicPath: "auto",
@@ -32,8 +32,6 @@ module.exports = {
     new ModuleFederationPlugin({
       name: "app1",
       remotes: {
-        app2: `app2@${getRemoteEntryUrl(3002)}`,
-        app3: `app3@${getRemoteEntryUrl(3003)}`,
         "@core":
           "core@https://agoras-df-dm-capp.wittybay-a2ac6d2d.centralus.azurecontainerapps.io/_next/static/chunks/remoteEntry.js",
       },
@@ -47,7 +45,3 @@ module.exports = {
     }),
   ],
 };
-
-function getRemoteEntryUrl(port) {
-  return `//localhost:${port}/remoteEntry.js`;
-}
