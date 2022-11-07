@@ -1,10 +1,10 @@
 const deps = require("../package.json").dependencies;
 const { ModuleFederationPlugin } = require("webpack").container;
-const NextFederationPlugin = require("@module-federation/nextjs-mf");
+const { UniversalFederationPlugin } = require("@module-federation/node");
 
 module.exports = {
   client: new ModuleFederationPlugin({
-    name: "app1",
+    name: "shell",
     remotes: {
       "@core":
         "core@https://agoras-df-dm-capp.wittybay-a2ac6d2d.centralus.azurecontainerapps.io/_next/static/chunks/remoteEntry.js",
@@ -15,14 +15,16 @@ module.exports = {
     },
   }),
   server: [
-    new NextFederationPlugin({
-      name: "shell",
-      filename: "static/chunks/remoteEntry.js",
+    new UniversalFederationPlugin({
+      name: "website2",
+      library: { type: "commonjs-module" },
+      isServer: true,
       remotes: {
         "@core":
           "core@https://agoras-df-dm-capp.wittybay-a2ac6d2d.centralus.azurecontainerapps.io/_next/static/ssr/remoteEntry.js",
       },
-      shared: {},
+      filename: "remoteEntry.js",
+      exposes: {},
     }),
   ],
 };
