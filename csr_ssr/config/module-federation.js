@@ -7,7 +7,7 @@ module.exports = {
     name: "shell",
     remotes: {
       "@core":
-        "core@https://agoras-df-dm-capp.wittybay-a2ac6d2d.centralus.azurecontainerapps.io/_next/static/chunks/remoteEntry.js",
+        "core@https://main.df.marketplaceagoras.azure.net/_next/static/chunks/remoteEntry.js",
     },
     shared: {
       react: { singleton: true, requiredVersion: deps["react-dom"] },
@@ -21,7 +21,7 @@ module.exports = {
       isServer: true,
       remotes: {
         "@core":
-          "core@https://agoras-df-dm-capp.wittybay-a2ac6d2d.centralus.azurecontainerapps.io/_next/static/ssr/remoteEntry.js",
+          "core@https://main.df.marketplaceagoras.azure.net/_next/static/ssr/remoteEntry.js",
       },
       filename: "remoteEntry.js",
       exposes: {},
