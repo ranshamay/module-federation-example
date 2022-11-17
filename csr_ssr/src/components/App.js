@@ -33,7 +33,7 @@ export default () => (
       <title>SSR MF Example</title>
     </Helmet>
     <React.Suspense fallback={<h1>Loading....</h1>}>
-      <Header user={user} logger={mockedLogger} />
+      <Header user={user} logger={mockedLogger} shouldInitIcons />
     </React.Suspense>
   </div>
 );
