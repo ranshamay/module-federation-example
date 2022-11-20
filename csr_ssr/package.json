@@ -13,8 +13,7 @@
     "build:server": "rimraf dist/server && webpack --progress --config config/webpack.server.js"
   },
   "dependencies": {
-    "@module-federation/nextjs-mf": "^5.6.0",
-    "@module-federation/node": "^0.3.0",
+    "@module-federation/node": "^0.9.4",
     "express": "^4.17.1",
     "node-fetch": "^3.2.10",
     "react": "^18.2.0",
