@@ -13,6 +13,7 @@
     "build:server": "rimraf dist/server && webpack --progress --config config/webpack.server.js"
   },
   "dependencies": {
+    "@fluentui/react": "^8.73.0",
     "@module-federation/node": "^0.9.4",
     "express": "^4.17.1",
     "node-fetch": "^3.2.10",
