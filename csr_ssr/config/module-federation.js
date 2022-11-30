@@ -26,15 +26,6 @@ module.exports = {
       shared: {
         "@fluentui/react": {
           singleton: true,
-          eager: true,
-        },
-        "@fluentui/style-utilities": {
-          singleton: true,
-          eager: true,
-        },
-        "@fluentui/merge-styles": {
-          singleton: true,
-          eager: true,
         },
       },
       filename: "remoteEntry.js",

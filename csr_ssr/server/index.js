@@ -1,27 +1,24 @@
-const express = require("express");
-const initMiddleware = require("./middleware");
-const fetch = require("node-fetch").default;
+import express from "express";
+import fetch from "node-fetch";
+import serverEntry from "./server-entry";
 
 global.fetch = fetch;
 const app = express();
 const PORT = 3004;
 
-const done = () => {
-  app.listen(PORT, () => {
-    console.info(
-      `[${new Date().toISOString()}]`,
-      `Shell App is running: 🌎 http://localhost:${PORT}`
-    );
-  });
-};
+app.use("/static", express.static("./dist/client"));
 
+const serverRender = serverEntry();
+app.get("/*", serverRender);
 if (module.hot) {
   module.hot.accept("./index", () => {
     console.log("is hot reloading");
     require("./index");
   });
 }
-
-initMiddleware(express, app, done);
-
-module.exports = app;
+app.listen(PORT, () => {
+  console.info(
+    `[${new Date().toISOString()}]`,
+    `Shell App is running: 🌎 http://localhost:${PORT}`
+  );
+});

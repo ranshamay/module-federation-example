@@ -1,8 +1,11 @@
-import React, { lazy } from "react";
+import React from "react";
 import { Helmet } from "react-helmet";
+import { initializeIcons, ThemeProvider } from "@fluentui/react";
 
-const Header = lazy(() => import("@core/Header"));
-
+const Header = React.lazy(() => {
+  const mod = import("@core/Header").catch(console.error);
+  return mod;
+});
 const mockedLogger = {
   info: console.info,
   warning: console.warn,
@@ -26,14 +29,16 @@ const user = {
     defaultDomain: null,
   },
 };
-
+initializeIcons();
 export default () => (
   <div>
     <Helmet>
       <title>SSR MF Example</title>
     </Helmet>
-    <React.Suspense fallback={<h1>Loading....</h1>}>
-      <Header user={user} logger={mockedLogger} shouldInitIcons />
-    </React.Suspense>
+    <ThemeProvider>
+      <React.Suspense fallback={<h1>Loading....</h1>}>
+        <Header user={user} logger={mockedLogger} />
+      </React.Suspense>
+    </ThemeProvider>
   </div>
 );
