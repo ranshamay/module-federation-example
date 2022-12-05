@@ -1,5 +1,13 @@
+const webpack = require("webpack");
+
 module.exports = {
   mode: "development",
+  devtool: "inline-source-map",
+  plugins: [
+    new webpack.SourceMapDevToolPlugin({
+      filename: "[name].js.map",
+    }),
+  ],
   resolve: {
     extensions: [".tsx", ".ts", ".jsx", ".js", ".json"],
   },

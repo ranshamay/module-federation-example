@@ -14,5 +14,5 @@ module.exports = merge(shared, {
     chunkFilename: "[name].js",
     publicPath: "auto",
   },
-  plugins: [moduleFederationPlugin.client],
+  plugins: [...moduleFederationPlugin.client],
 });
