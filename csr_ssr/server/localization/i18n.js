@@ -22,6 +22,6 @@ export default () =>
         loadPath: `https://agorasdfsaweu.blob.core.windows.net/localization/{{lng}}/{{ns}}.json`,
       },
       react: {
-        useSuspense: false, // triggers warining in debug mode: access the t function before i18next.init
+        useSuspense: true,
       },
     });

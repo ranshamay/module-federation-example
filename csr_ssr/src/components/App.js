@@ -38,14 +38,16 @@ const user = {
   },
 };
 initializeIcons();
-export default ({ i18nInstance }) => {
+export default () => {
   return (
     <ThemeProvider>
-      <I18nextProvider i18n={i18nInstance || i18n}>
+      <I18nextProvider i18n={i18n}>
         <React.Suspense fallback={<h1>Loading....</h1>}>
           <Header user={user} logger={mockedLogger} />
         </React.Suspense>
-        <Localized />
+        <React.Suspense fallback={<h1>Loading....</h1>}>
+          <Localized />
+        </React.Suspense>
       </I18nextProvider>
     </ThemeProvider>
   );
