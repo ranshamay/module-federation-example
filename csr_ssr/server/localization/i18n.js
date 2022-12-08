@@ -13,7 +13,7 @@ export default () =>
       supportedLngs: allLocalesCodes,
       fallbackLng: defaultLng,
       ns: [defaultNS],
-      preload: allLocalesCodes,
+      preload: [defaultLng],
       defaultNS: defaultNS,
       interpolation: {
         escapeValue: false, // not needed for react

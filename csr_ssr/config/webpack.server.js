@@ -15,7 +15,7 @@ module.exports = merge(shared, {
   plugins: [...moduleFederationPlugin.server],
   externals: [
     function ({ context, request }, callback) {
-      if (/^(react-dom|react)/.test(request)) {
+      if (/^(react-dom|react)$/.test(request)) {
         // Externalize to a commonjs module using the request path
         return callback(null, "commonjs " + request);
       }
