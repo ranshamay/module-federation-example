@@ -1,8 +1,7 @@
 import React from "react";
-import { initializeIcons, ThemeProvider } from "@fluentui/react";
+import { ThemeProvider } from "@fluentui/react";
 import { I18nextProvider } from "react-i18next";
 import i18n from "i18next";
-import Localized from "./Localized";
 
 const Header = React.lazy(async () => {
   let mod;
@@ -37,16 +36,12 @@ const user = {
     defaultDomain: null,
   },
 };
-initializeIcons();
 export default () => {
   return (
     <ThemeProvider>
       <I18nextProvider i18n={i18n}>
         <React.Suspense fallback={<h1>Loading....</h1>}>
           <Header user={user} logger={mockedLogger} />
-        </React.Suspense>
-        <React.Suspense fallback={<h1>Loading....</h1>}>
-          <Localized />
         </React.Suspense>
       </I18nextProvider>
     </ThemeProvider>

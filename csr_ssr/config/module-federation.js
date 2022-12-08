@@ -2,6 +2,19 @@ const deps = require("../package.json").dependencies;
 const { ModuleFederationPlugin } = require("webpack").container;
 const { UniversalFederationPlugin } = require("@module-federation/node");
 
+const sharedModules = {
+  "@fluentui/react": {
+    singleton: true,
+  },
+  i18next: {
+    singleton: true,
+  },
+  "react-i18next": {
+    singleton: true
+  }
+
+}
+
 module.exports = {
   client: [
     new ModuleFederationPlugin({
@@ -13,6 +26,7 @@ module.exports = {
       shared: {
         react: { singleton: true, requiredVersion: deps.react },
         "react-dom": { singleton: true, requiredVersion: deps["react-dom"] },
+       ...sharedModules
       },
     }),
   ],
@@ -26,9 +40,7 @@ module.exports = {
           "core@https://main.df.marketplaceagoras.azure.net/_next/static/ssr/remoteEntry.js",
       },
       shared: {
-        "@fluentui/react": {
-          singleton: true,
-        },
+      ...sharedModules
       },
       filename: "remoteEntry.js",
       exposes: {},

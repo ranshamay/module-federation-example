@@ -4,12 +4,15 @@ import i18n from "i18next";
 
 // import { Helmet } from "react-helmet";
 import App from "../src/components/App";
-import { InjectionMode, resetIds, Stylesheet } from "@fluentui/react";
+import {  initializeIcons, InjectionMode, resetIds, Stylesheet } from "@fluentui/react";
+
 const stylesheet = Stylesheet.getInstance();
 
 stylesheet.setConfig({
   injectionMode: InjectionMode.none,
 });
+
+initializeIcons()
 
 export default async (req, res, next) => {
   resetIds();
@@ -44,6 +47,7 @@ export default async (req, res, next) => {
     onShellError(err) {
       res.statusCode = 500;
       res.send(`<h1>An error occurred</h1>`);
+      res.send(`<pre>${err}</pre>`);
     },
     onError(err) {
       didError = true;
