@@ -4,7 +4,7 @@ import i18n from "i18next";
 
 // import { Helmet } from "react-helmet";
 import App from "../src/components/App";
-import {  initializeIcons, InjectionMode, resetIds, Stylesheet } from "@fluentui/react";
+import { initializeIcons, InjectionMode, resetIds, Stylesheet } from "@fluentui/react";
 
 const stylesheet = Stylesheet.getInstance();
 
@@ -40,7 +40,7 @@ export default async (req, res, next) => {
       stream.pipe(res);
       res.write(`</div>`);
       res.write(
-        `<script async data-chunk="main" src="http://localhost:3004/static/main.js"></script>`
+        `<script async data-chunk="main" src="/static/main.js"></script>`
       );
       res.write(`</body></html>`);
     },

@@ -19,7 +19,7 @@ export default () =>
         escapeValue: false, // not needed for react
       },
       backend: {
-        loadPath: `https://agorasdfsaweu.blob.core.windows.net/localization/{{lng}}/{{ns}}.json`,
+        loadPath: `https://static.df.cloudmarketplace.microsoft.com/localization/{{lng}}/{{ns}}.json`,
       },
       react: {
         useSuspense: true,
