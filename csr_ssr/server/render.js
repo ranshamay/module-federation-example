@@ -30,8 +30,8 @@ export default async (req, res, next) => {
     onAllReady() {
       res.statusCode = didError ? 500 : 200;
       res.setHeader("Content-type", "text/html");
-      res.write(`<!DOCTYPE html`);
-      res.write(`<html }>
+      res.write(`<!DOCTYPE html>`);
+      res.write(`<html>
       <head>
         ${`<style>${css}</style>`}
       </head>
