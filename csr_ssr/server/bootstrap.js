@@ -4,7 +4,7 @@ import serverEntry from "./server-entry";
 import i18nInit from "./localization/i18n";
 
 const app = express();
-const PORT = 3001;
+const PORT = 3000;
 
 app.use("/static", express.static("./dist/client"));
 
