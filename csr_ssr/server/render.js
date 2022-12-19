@@ -14,7 +14,7 @@ stylesheet.setConfig({
 
 initializeIcons()
 const getLocaleFromUrl = (url) => {
-  return url.split('/')[1]
+  return url.split('/')[1].split('-')[0]
 }
 export default async (req, res, next) => {
   resetIds();

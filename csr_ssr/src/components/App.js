@@ -81,13 +81,13 @@ export default () => {
   const handleOpenSignInModal = (args) => {
     setModalOpen(true)
   };
-
+  const getLocaleFromUrl = () => { return !isSSR && window.location.pathname.split('/')[1].split('-')[0] || 'en-us' }
 
   return (
     <ThemeProvider>
       <I18nextProvider i18n={i18n}>
         <React.Suspense fallback={<h1>Loading....</h1>}>
-          <Header user={user} logger={mockedLogger} openSignInModal={handleOpenSignInModal} />
+          <Header user={user} logger={mockedLogger} openSignInModal={handleOpenSignInModal} locale={getLocaleFromUrl()} onLocaleChange={(locale) => window.location = `/${locale}`} />
         </React.Suspense>
         <Modal
           isOpen={isModalOpen}
