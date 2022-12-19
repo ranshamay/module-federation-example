@@ -4,7 +4,7 @@ import * as ReactIcons from '@fluentui/react-icons-mdl2';
 import { I18nextProvider } from "react-i18next";
 import i18n from "i18next";
 import RestClient from "@core/RestClient"
-
+import i18nInit from './i18n'
 
 const mockedLogger = {
   info: console.info,
@@ -17,6 +17,9 @@ const mockedLogger = {
     console.log("=======================");
   },
 };
+
+
+const isSSR = typeof window === 'undefined';
 
 const getAccessToken = async (tokenType) => {
   let resp;
@@ -51,11 +54,6 @@ const user = {
   signedIn: false,
   displayName: "test1123",
   email: "test@test.com",
-  tenantDetails: {
-    tenantId: null,
-    displayName: null,
-    defaultDomain: null,
-  },
 };
 const styles = mergeStyleSets({
   container: {
@@ -69,9 +67,14 @@ const styles = mergeStyleSets({
     fontSize: 100
   }
 })
+
+//init 
+!isSSR && i18nInit();
 initializeIcons()
 RestClient.init(mockedLogger, getAccessToken);
 
+
+//render
 export default () => {
   const [isModalOpen, setModalOpen] = useState(false);
 

@@ -13,14 +13,23 @@ stylesheet.setConfig({
 });
 
 initializeIcons()
-
+const getLocaleFromUrl = (url) => {
+  return url.split('/')[1]
+}
 export default async (req, res, next) => {
   resetIds();
+  const i18nInstance = i18n.cloneInstance();
+  await i18nInstance.changeLanguage(getLocaleFromUrl(req.url));
 
-  // const i18nInstance = i18n.cloneInstance();
-  // await i18nInstance.loadNamespaces(["resources"]);
 
-  // await i18nInstance.changeLanguage("en");
+  const i18nclient = {
+    store: {
+      data: {
+        [i18nInstance.language]: i18nInstance.getDataByLanguage(i18nInstance.language),
+      },
+    },
+    language: i18nInstance.language,
+  }
 
   const sheet = Stylesheet.getInstance();
   const css = sheet.getRules(true);
@@ -34,6 +43,7 @@ export default async (req, res, next) => {
       res.write(`<html>
       <head>
         ${`<style>${css}</style>`}
+        ${`<script>window.__i18nclient = ${JSON.stringify(i18nclient)}</script>`}
       </head>
       <body>`);
       res.write(`<div id="root">`);
