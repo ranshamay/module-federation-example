@@ -5,6 +5,7 @@ import { I18nextProvider } from "react-i18next";
 import i18n from "i18next";
 import RestClient from "@core/RestClient"
 import i18nInit from './i18n'
+import { getAccessTokenCB } from '../utils/RestClient'
 
 const mockedLogger = {
   info: console.info,
@@ -71,7 +72,7 @@ const styles = mergeStyleSets({
 //init 
 !isSSR && i18nInit();
 initializeIcons()
-RestClient.init(mockedLogger, getAccessToken);
+RestClient.init(mockedLogger, getAccessTokenCB);
 
 
 //render

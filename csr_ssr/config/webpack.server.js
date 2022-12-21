@@ -11,7 +11,6 @@ module.exports = merge(shared, {
     filename: "[name].js",
     chunkFormat: "commonjs",
   },
-  mode: "development",
   plugins: [...moduleFederationPlugin.server],
   externals: [
     function ({ context, request }, callback) {

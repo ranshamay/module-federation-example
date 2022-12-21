@@ -9,8 +9,11 @@
     "start": "npm run build && npm run serve",
     "serve": "node dist/server/main.js",
     "build": "npm run build:server && npm run build:client",
+    "build:prod": "npm run build:prod:server && npm run build:prod:client",
     "build:client": "rimraf dist/client && webpack --progress --config config/webpack.client.js",
-    "build:server": "rimraf dist/server && webpack --progress --config config/webpack.server.js"
+    "build:server": "rimraf dist/server && webpack --progress --config config/webpack.server.js",
+    "build:prod:client": "rimraf dist/client && webpack --progress --config config/webpack.prod.client.js",
+    "build:prod:server": "rimraf dist/server && webpack --progress --config config/webpack.prod.server.js"
   },
   "dependencies": {
     "@fluentui/react": "^8.103.3",
