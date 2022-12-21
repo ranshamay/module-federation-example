@@ -1,11 +1,20 @@
 import React, { useState } from "react";
-import { ThemeProvider, initializeIcons, Stack, mergeStyleSets, Icon, Text, Modal, IconButton } from "@fluentui/react";
-import * as ReactIcons from '@fluentui/react-icons-mdl2';
+import {
+  ThemeProvider,
+  initializeIcons,
+  Stack,
+  mergeStyleSets,
+  Icon,
+  Text,
+  Modal,
+  IconButton,
+} from "@fluentui/react";
+import * as ReactIcons from "@fluentui/react-icons-mdl2";
 import { I18nextProvider } from "react-i18next";
 import i18n from "i18next";
-import RestClient from "@core/RestClient"
-import i18nInit from './i18n'
-import { getAccessTokenCB } from '../utils/RestClient'
+import RestClient from "@core/RestClient";
+import i18nInit from "./i18n";
+import { getAccessTokenCB } from "../utils/RestClient";
 
 const mockedLogger = {
   info: console.info,
@@ -19,14 +28,13 @@ const mockedLogger = {
   },
 };
 
-
-const isSSR = typeof window === 'undefined';
+const isSSR = typeof window === "undefined";
 
 const getAccessToken = async (tokenType) => {
   let resp;
   try {
-    console.log('fetching token')
-    return 'accessToken';
+    console.log("fetching token");
+    return "accessToken";
   } catch (err) {
     mockedLogger.error(
       JSON.stringify({
@@ -48,8 +56,6 @@ const Header = React.lazy(async () => {
   return mod;
 });
 
-
-
 const user = {
   loading: false,
   signedIn: false,
@@ -62,33 +68,45 @@ const styles = mergeStyleSets({
   },
   children: {
     height: "calc(100vh - 92px)",
-    paddingBottom: '15vh',
+    paddingBottom: "15vh",
   },
   underConstructionFont: {
-    fontSize: 100
-  }
-})
+    fontSize: 100,
+  },
+});
 
-//init 
+//init
 !isSSR && i18nInit();
-initializeIcons()
+initializeIcons();
 RestClient.init(mockedLogger, getAccessTokenCB);
 
+const getLocaleFromUrl = () => {
+  return (!isSSR && window.location.pathname.split("/")[1]) || "en-us";
+};
 
 //render
 export default () => {
   const [isModalOpen, setModalOpen] = useState(false);
+  const [locale, setLocale] = useState(getLocaleFromUrl());
 
   const handleOpenSignInModal = (args) => {
-    setModalOpen(true)
+    setModalOpen(true);
   };
-  const getLocaleFromUrl = () => { return !isSSR && window.location.pathname.split('/')[1].split('-')[0] || 'en-us' }
 
   return (
     <ThemeProvider>
       <I18nextProvider i18n={i18n}>
         <React.Suspense fallback={<h1>Loading....</h1>}>
-          <Header user={user} logger={mockedLogger} openSignInModal={handleOpenSignInModal} locale={getLocaleFromUrl()} onLocaleChange={(locale) => window.location = `/${locale}`} />
+          <Header
+            user={user}
+            logger={mockedLogger}
+            openSignInModal={handleOpenSignInModal}
+            locale={locale}
+            onLocaleChange={(locale) => {
+              window.location = `/${locale}`;
+              setLocale(locale);
+            }}
+          />
         </React.Suspense>
         <Modal
           isOpen={isModalOpen}
@@ -96,27 +114,28 @@ export default () => {
           isBlocking={false}
         >
           <div>
-            <h2 >
-              Login modal
-            </h2>
-            <IconButton
-              onClick={() => setModalOpen(false)}
-            />
+            <h2>Login modal</h2>
+            <IconButton onClick={() => setModalOpen(false)} />
           </div>
           <div>
-            <p>
-              this is a login modal
-            </p>
+            <p>this is a login modal</p>
           </div>
         </Modal>
-        <Stack horizontalAlign="center" className={styles.container}><Stack className={styles.children} verticalAlign="center"><Stack tokens={{ childrenGap: 15 }} horizontalAlign="center"><Stack.Item><Text variant="xxLarge">Under Construction</Text></Stack.Item><Stack.Item><Icon className={styles.underConstructionFont} ><ReactIcons.BuildDefinitionIcon /></Icon></Stack.Item></Stack></Stack></Stack>
+        <Stack horizontalAlign="center" className={styles.container}>
+          <Stack className={styles.children} verticalAlign="center">
+            <Stack tokens={{ childrenGap: 15 }} horizontalAlign="center">
+              <Stack.Item>
+                <Text variant="xxLarge">Under Construction</Text>
+              </Stack.Item>
+              <Stack.Item>
+                <Icon className={styles.underConstructionFont}>
+                  <ReactIcons.BuildDefinitionIcon />
+                </Icon>
+              </Stack.Item>
+            </Stack>
+          </Stack>
+        </Stack>
       </I18nextProvider>
     </ThemeProvider>
   );
 };
-
-
-
-
-
-
