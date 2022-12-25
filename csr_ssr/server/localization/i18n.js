@@ -5,9 +5,9 @@ import HttpBackend from "i18next-http-backend";
 import { initReactI18next } from "react-i18next";
 import axios from 'axios';
 import { omitBy, isEmpty } from 'lodash'
-const fetchAllTranslations = async () => {
+
+const preloadTranslations = async () => {
   const combs = allLocalesCodes.reduce((acc, lng) => [...acc, ...['header', 'search'].map((ns) => [lng, ns])], []);
-  let progress = 0;
 
   const agorasRecources = await Promise.all(
     combs.map(async ([lng, ns]) => {
@@ -37,7 +37,6 @@ const fetchAllTranslations = async () => {
 
 export default async () => {
 
-
   const i18nInstance = await i18n
     .use(HttpBackend)
     .use(initReactI18next)
@@ -59,8 +58,8 @@ export default async () => {
       },
 
     });
-  fetchAllTranslations()
+
+  await preloadTranslations();
+
   return i18nInstance;
-
-
 }
