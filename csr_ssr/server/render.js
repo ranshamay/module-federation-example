@@ -1,8 +1,6 @@
 import React from "react";
 import { renderToPipeableStream } from "react-dom/server";
 import i18n from "i18next";
-
-// import { Helmet } from "react-helmet";
 import App from "../src/components/App";
 import { initializeIcons, InjectionMode, resetIds, Stylesheet } from "@fluentui/react";
 
@@ -10,16 +8,18 @@ const stylesheet = Stylesheet.getInstance();
 
 stylesheet.setConfig({
   injectionMode: InjectionMode.none,
+  namespace: "server"
 });
 
 initializeIcons()
-const getLocaleFromUrl = (url) => {
-  return url.split('/')[1].split('-')[0]
-}
-export default async (req, res, next) => {
+
+export default async (req, res) => {
   resetIds();
+
+  const locale = req.url.split('/')[1];
+  const language = locale.split('-')[0];
   const i18nInstance = i18n.cloneInstance();
-  await i18nInstance.changeLanguage(getLocaleFromUrl(req.url));
+  await i18nInstance.changeLanguage(language);
 
 
   const i18nclient = {
@@ -31,27 +31,24 @@ export default async (req, res, next) => {
     language: i18nInstance.language,
   }
 
-  const sheet = Stylesheet.getInstance();
-  const css = sheet.getRules(true);
-  // const helmet = Helmet.renderStatic();
+
   let didError = false;
-  const stream = renderToPipeableStream(<App />, {
+  const stream = renderToPipeableStream(<App i18nInstance={i18nInstance} locale={locale} />, {
+    bootstrapScripts: ['/static/main.js'],
     onAllReady() {
       res.statusCode = didError ? 500 : 200;
       res.setHeader("Content-type", "text/html");
       res.write(`<!DOCTYPE html>`);
       res.write(`<html>
       <head>
-        ${`<style>${css}</style>`}
-        ${`<script>window.__i18nclient = ${JSON.stringify(i18nclient)}</script>`}
+        <meta charset="UTF-8">
+        <style>${stylesheet.getRules(true)}</style>
+        <script>window.__i18nclient = ${JSON.stringify(i18nclient)}</script>
       </head>
       <body>`);
       res.write(`<div id="root">`);
       stream.pipe(res);
       res.write(`</div>`);
-      res.write(
-        `<script async data-chunk="main" src="/static/main.js"></script>`
-      );
       res.write(`</body></html>`);
     },
     onShellError(err) {

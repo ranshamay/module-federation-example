@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import {
   ThemeProvider,
-  initializeIcons,
   Stack,
   mergeStyleSets,
   Icon,
@@ -11,12 +10,9 @@ import {
 } from "@fluentui/react";
 import * as ReactIcons from "@fluentui/react-icons-mdl2";
 import { I18nextProvider } from "react-i18next";
-import i18n from "i18next";
-import RestClient from "@core/RestClient";
-import i18nInit from "./i18n";
-import { getAccessTokenCB } from "../utils/RestClient";
 
-const mockedLogger = {
+
+export const mockedLogger = {
   info: console.info,
   warning: console.warn,
   error: console.error,
@@ -28,22 +24,8 @@ const mockedLogger = {
   },
 };
 
-const isSSR = typeof window === "undefined";
+export const isSSR = typeof window === "undefined";
 
-const getAccessToken = async (tokenType) => {
-  let resp;
-  try {
-    console.log("fetching token");
-    return "accessToken";
-  } catch (err) {
-    mockedLogger.error(
-      JSON.stringify({
-        err,
-      })
-    );
-  }
-  return null;
-};
 
 const Header = React.lazy(async () => {
   let mod;
@@ -75,27 +57,19 @@ const styles = mergeStyleSets({
   },
 });
 
-//init
-!isSSR && i18nInit();
-initializeIcons();
-RestClient.init(mockedLogger, getAccessTokenCB);
 
-const getLocaleFromUrl = () => {
-  return (!isSSR && window.location.pathname.split("/")[1]) || "en-us";
-};
 
 //render
-export default () => {
+const App = ({i18nInstance, locale}) => {
   const [isModalOpen, setModalOpen] = useState(false);
-  const [locale, setLocale] = useState(getLocaleFromUrl());
 
-  const handleOpenSignInModal = (args) => {
+  const handleOpenSignInModal = () => {
     setModalOpen(true);
   };
 
   return (
     <ThemeProvider>
-      <I18nextProvider i18n={i18n}>
+      <I18nextProvider i18n={i18nInstance}>
         <React.Suspense fallback={<h1>Loading....</h1>}>
           <Header
             user={user}
@@ -103,8 +77,8 @@ export default () => {
             openSignInModal={handleOpenSignInModal}
             locale={locale}
             onLocaleChange={(locale) => {
-              window.location = `/${locale}`;
-              setLocale(locale);
+              console.log("Changing locale to", locale)
+              window.location = `/${locale}`
             }}
           />
         </React.Suspense>
@@ -139,3 +113,5 @@ export default () => {
     </ThemeProvider>
   );
 };
+
+export default App;
