@@ -17,10 +17,12 @@ export default async (req, res) => {
   resetIds();
 
   const locale = req.url.split('/')[1];
-  const language = locale.split('-')[0];
   const i18nInstance = i18n.cloneInstance();
-  await i18nInstance.changeLanguage(language);
 
+  if (locale) {
+    const language = locale.split('-')[0];
+    await i18nInstance.changeLanguage(language);
+  }
 
   const i18nclient = {
     store: {
