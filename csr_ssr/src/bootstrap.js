@@ -8,14 +8,21 @@ import RestClient from "@core/RestClient";
 
 import './index.css';
 
-
+function getLocale() {
+    const defaultLocale = "en-US";
+    try {
+        return window.location.pathname.split("/")[1] || defaultLocale;
+    } catch {
+        return defaultLocale;
+    }
+}
 
 async function hydrateClient() {
     // initialize app prerequisites before hydration
     RestClient.init(mockedLogger, getAccessTokenCB);
     initializeIcons();
     const i18nInstance = await i18n();
-    const locale = window.location.pathname.split("/")[1];
+    const locale = getLocale();
 
     // hydrate app
     const container = document.getElementById("root");
