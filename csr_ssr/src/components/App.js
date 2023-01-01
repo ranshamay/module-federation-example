@@ -30,7 +30,7 @@ export const isSSR = typeof window === "undefined";
 const Header = React.lazy(async () => {
   let mod;
   try {
-    mod = await import("@core/Header");
+    mod = await import("@layout/Header");
   } catch (err) {
     console.log(err);
     mod = await import("./OfflineRemote");
