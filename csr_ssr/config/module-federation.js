@@ -20,13 +20,13 @@ module.exports = {
     new ModuleFederationPlugin({
       name: "shell",
       remotes: {
-        "@core":
-          "core@https://main.df.marketplaceagoras.azure.net/_next/static/chunks/remoteEntry.js",
+        "@core": "core@https://static.df.cloudmarketplace.microsoft.com/artifacts/core/cc658975931361e5de2fd3a032c96eceffd99253/_next/static/chunks/remoteEntry.js",
+        "@layout": "layout@https://static.df.cloudmarketplace.microsoft.com/artifacts/layout/cc658975931361e5de2fd3a032c96eceffd99253/_next/static/chunks/remoteEntry.js",
       },
       shared: {
         react: { singleton: true, requiredVersion: deps.react },
         "react-dom": { singleton: true, requiredVersion: deps["react-dom"] },
-       ...sharedModules
+        ...sharedModules
       },
     }),
   ],
@@ -37,12 +37,13 @@ module.exports = {
       isServer: true,
       remotes: {
         "@core":
-          "core@https://main.df.marketplaceagoras.azure.net/_next/static/ssr/remoteEntry.js",
+          "core@https://static.df.cloudmarketplace.microsoft.com/artifacts/core/cc658975931361e5de2fd3a032c96eceffd99253/_next/static/ssr/remoteEntry.js",
+        "@layout":
+          "layout@https://static.df.cloudmarketplace.microsoft.com/artifacts/layout/cc658975931361e5de2fd3a032c96eceffd99253/_next/static/ssr/remoteEntry.js",
       },
       shared: {
-      ...sharedModules
+        ...sharedModules
       },
-      filename: "remoteEntry.js",
       exposes: {},
     }),
   ],
