@@ -3,7 +3,7 @@ import React from "react";
 import { hydrateRoot } from "react-dom/client";
 import i18n from "./i18n";
 import { initializeIcons } from "@fluentui/react";
-import { ApplicationInsights } from "@microsoft/1ds-analytics-web-js";
+import { ApplicationInsights } from "./mocks/@microsoft/1ds-analytics-web-js";
 import { getAccessTokenCB } from "./utils/RestClient";
 import RestClient from "@core/RestClient";
 import logger from "@core/logger";
