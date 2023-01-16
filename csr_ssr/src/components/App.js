@@ -11,7 +11,6 @@ import {
 import * as ReactIcons from "@fluentui/react-icons-mdl2";
 import { I18nextProvider } from "react-i18next";
 
-
 export const mockedLogger = {
   info: console.info,
   warning: console.warn,
@@ -25,7 +24,6 @@ export const mockedLogger = {
 };
 
 export const isSSR = typeof window === "undefined";
-
 
 const Header = React.lazy(async () => {
   let mod;
@@ -57,10 +55,8 @@ const styles = mergeStyleSets({
   },
 });
 
-
-
 //render
-const App = ({i18nInstance, locale}) => {
+const App = ({ i18nInstance, locale }) => {
   const [isModalOpen, setModalOpen] = useState(false);
 
   const handleOpenSignInModal = () => {
@@ -77,9 +73,11 @@ const App = ({i18nInstance, locale}) => {
             openSignInModal={handleOpenSignInModal}
             locale={locale}
             onLocaleChange={(locale) => {
-              console.log("Changing locale to", locale)
-              window.location = `/${locale}`
+              console.log("Changing locale to", locale);
+              window.location = `/${locale}`;
             }}
+            // region={{code: string (e.g 'US'), disable: boolean }}
+            // onRegionChange={ async (regionCode) => {}}
           />
         </React.Suspense>
         <Modal
