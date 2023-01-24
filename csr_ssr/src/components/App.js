@@ -58,10 +58,21 @@ const styles = mergeStyleSets({
 //render
 const App = ({ i18nInstance, locale }) => {
   const [isModalOpen, setModalOpen] = useState(false);
-
+  const [currentRegion, handleRegionChange] = useState(!isSSR && localStorage.getItem('region') || '');
+  const [currentLocale, handleLocaleChange] = useState(locale);
   const handleOpenSignInModal = () => {
     setModalOpen(true);
   };
+
+  const handlePersistentLocaleChange = (locale) => {
+    !isSSR && localStorage.setItem("locale", locale);
+    handleLocaleChange(locale)
+  }
+
+  const handlePersistentRegionChange = (region) => {
+    !isSSR && localStorage.setItem("region", region);
+    handleRegionChange(region)
+  }
 
   return (
     <ThemeProvider>
@@ -71,13 +82,15 @@ const App = ({ i18nInstance, locale }) => {
             user={user}
             logger={mockedLogger}
             openSignInModal={handleOpenSignInModal}
-            locale={locale}
+            locale={currentLocale}
             onLocaleChange={(locale) => {
-              console.log("Changing locale to", locale);
+              handlePersistentLocaleChange(locale)
               window.location = `/${locale}`;
             }}
-            // region={{code: string (e.g 'US'), disable: boolean }}
-            // onRegionChange={ async (regionCode) => {}}
+            region={{ code: currentRegion, disable: false }}
+            onRegionChange={async (regionCode) => {
+              handlePersistentRegionChange(regionCode)
+            }}
           />
         </React.Suspense>
         <Modal
