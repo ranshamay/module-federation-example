@@ -36,12 +36,7 @@ const Header = React.lazy(async () => {
   return mod;
 });
 
-const user = {
-  loading: false,
-  signedIn: false,
-  displayName: "test1123",
-  email: "test@test.com",
-};
+
 const styles = mergeStyleSets({
   container: {
     flex: "1 1 auto",
@@ -79,15 +74,18 @@ const App = ({ i18nInstance, locale }) => {
       <I18nextProvider i18n={i18nInstance}>
         <React.Suspense fallback={<h1>Loading....</h1>}>
           <Header
-            user={user}
+            userProps={{
+              loading: false,
+              signedIn: false,
+              openSignInModal: handleOpenSignInModal,
+            }}
             logger={mockedLogger}
-            openSignInModal={handleOpenSignInModal}
             locale={currentLocale}
             onLocaleChange={(locale) => {
               handlePersistentLocaleChange(locale)
               window.location = `/${locale}`;
             }}
-            region={{ code: currentRegion, disable: false }}
+            region={{ code: currentRegion, disabled: false }}
             onRegionChange={async (regionCode) => {
               handlePersistentRegionChange(regionCode)
             }}
