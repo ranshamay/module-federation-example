@@ -32,21 +32,22 @@ async function hydrateClient() {
 
   try {
     logger = await import("@core/logger");
+    logger.default.init(_1dsLogger, {
+      correlationId: v4(),
+      hostType: "Sample App - CSR_SSR",
+    });
   } catch (e) {
     console.log('failed to load logger', e);
+
   }
   try {
     RestClient = await import("@core/RestClient");
+    RestClient.default.init(mockedLogger, getAccessTokenCB);
   } catch (e) {
     console.log('failed to load restClient', e);
   }
 
-  logger?.init(_1dsLogger, {
-    correlationId: v4(),
-    hostType: "Sample App - CSR_SSR",
-  });
 
-  RestClient?.init(mockedLogger, getAccessTokenCB);
   initializeIcons();
   const i18nInstance = await i18n();
   const locale = getLocale();
