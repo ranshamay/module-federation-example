@@ -1,11 +1,13 @@
-import App, { mockedLogger } from "./components/App";
+import App from "./components/App";
 import React from "react";
 import { hydrateRoot } from "react-dom/client";
 import i18n from "./i18n";
-import { initializeIcons } from "@fluentui/react";
+import { registerIcons, initializeIcons } from "@fluentui/react";
 import { ApplicationInsights } from "./mocks/@microsoft/1ds-analytics-web-js";
+import { mockedLogger } from "./mocks/logger";
 import { getAccessTokenCB } from "./utils/RestClient";
 import { v4 } from "uuid";
+import { BuildDefinitionIcon } from "@fluentui/react-icons-mdl2";
 
 import "./index.css";
 
@@ -23,6 +25,9 @@ function getLocale() {
   }
 }
 
+initializeIcons();
+registerIcons({ icons: { BuildDefinitionIcon: <BuildDefinitionIcon /> } });
+
 async function hydrateClient() {
   // initialize app prerequisites before hydration
   const _1dsLogger = new ApplicationInsights();
@@ -37,24 +42,23 @@ async function hydrateClient() {
       hostType: "Sample App - CSR_SSR",
     });
   } catch (e) {
-    console.log('failed to load logger', e);
-
+    console.log("failed to load logger", e);
   }
   try {
     RestClient = await import("@core/RestClient");
     RestClient.default.init(mockedLogger, getAccessTokenCB);
   } catch (e) {
-    console.log('failed to load restClient', e);
+    console.log("failed to load restClient", e);
   }
 
-
-  initializeIcons();
   const i18nInstance = await i18n();
   const locale = getLocale();
 
   // hydrate app
   const container = document.getElementById("root");
-  hydrateRoot(container, <App i18nInstance={i18nInstance} locale={locale} />);
+  hydrateRoot(container, <App i18nInstance={i18nInstance} locale={locale} />, {
+    onRecoverableError: () => {},
+  });
 }
 
 hydrateClient();
