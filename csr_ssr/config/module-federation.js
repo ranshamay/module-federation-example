@@ -25,9 +25,9 @@ module.exports = {
       name: "csr-shell",
       remotes: {
         "@core":
-          "core@http://localhost:4201/_next/static/chunks/remoteEntry.js",
+          "core@https://static.df.cloudmarketplace.microsoft.com/artifacts/core/latest/_next/static/chunks/remoteEntry.js",
         "@layout":
-          "layout@http://localhost:4202/_next/static/chunks/remoteEntry.js",
+          "layout@https://static.df.cloudmarketplace.microsoft.com/artifacts/layout/latest/_next/static/chunks/remoteEntry.js",
       },
       shared: sharedModules,
     }),
@@ -38,9 +38,10 @@ module.exports = {
       library: { type: "commonjs-module" },
       isServer: true,
       remotes: {
-        "@core": "core@http://localhost:4201/_next/static/ssr/remoteEntry.js",
+        "@core":
+          "core@https://static.df.cloudmarketplace.microsoft.com/artifacts/core/latest/_next/static/ssr/remoteEntry.js",
         "@layout":
-          "layout@http://localhost:4202/_next/static/ssr/remoteEntry.js",
+          "layout@https://static.df.cloudmarketplace.microsoft.com/artifacts/layout/latest/_next/static/ssr/remoteEntry.js",
       },
       shared: sharedModules,
     }),
