@@ -1,2 +1,2 @@
-export const defaultLng = "en";
-export const defaultNS = "resources";
+export const defaultLng = "en-US";
+export const defaultNS = "header";

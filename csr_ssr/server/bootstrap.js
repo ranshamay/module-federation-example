@@ -7,6 +7,7 @@ const app = express();
 const PORT = 3001;
 
 app.use("/static", express.static("./dist/client"));
+app.use(express.static("public"));
 
 i18nInit().then(() => {
   app.listen(PORT, () => {

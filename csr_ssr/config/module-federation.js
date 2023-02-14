@@ -1,20 +1,13 @@
-const deps = require("../package.json").dependencies;
+const package = require("../package.json");
 const { ModuleFederationPlugin } = require("webpack").container;
 const { UniversalFederationPlugin } = require("@module-federation/node");
 
-const generateRemotes = ({ isServer }) => {
-  const remotes = {};
-  const modules = [
-    "core",
-    "layout",
-  ];
-  modules.forEach((module) => {
-    remotes[`@${module}`] = `${module}@https://static.df.cloudmarketplace.microsoft.com/artifacts/${module}/latest/_next/static/${isServer ? 'ssr' : 'chunks'}/remoteEntry.js`;
-  });
-  return remotes;
-}
-
 const sharedModules = {
+  react: { singleton: true, requiredVersion: package.dependencies.react },
+  "react-dom": {
+    singleton: true,
+    requiredVersion: package.dependencies["react-dom"],
+  },
   "@fluentui/react": {
     singleton: true,
   },
@@ -22,33 +15,35 @@ const sharedModules = {
     singleton: true,
   },
   "react-i18next": {
-    singleton: true
-  }
-
-}
+    singleton: true,
+  },
+};
 
 module.exports = {
   client: [
     new ModuleFederationPlugin({
-      name: "shell",
-      remotes: generateRemotes({ isServer: false }),
-      shared: {
-        react: { singleton: true, requiredVersion: deps.react },
-        "react-dom": { singleton: true, requiredVersion: deps["react-dom"] },
-        ...sharedModules
+      name: "csr-shell",
+      remotes: {
+        "@core":
+          "core@https://static.df.cloudmarketplace.microsoft.com/artifacts/core/latest/_next/static/chunks/remoteEntry.js",
+        "@layout":
+          "layout@https://static.df.cloudmarketplace.microsoft.com/artifacts/layout/latest/_next/static/chunks/remoteEntry.js",
       },
+      shared: sharedModules,
     }),
   ],
   server: [
     new UniversalFederationPlugin({
-      name: "website2",
+      name: "ssr-shell",
       library: { type: "commonjs-module" },
       isServer: true,
-      remotes: generateRemotes({ isServer: true }),
-      shared: {
-        ...sharedModules
+      remotes: {
+        "@core":
+          "core@https://static.df.cloudmarketplace.microsoft.com/artifacts/core/latest/_next/static/ssr/remoteEntry.js",
+        "@layout":
+          "layout@https://static.df.cloudmarketplace.microsoft.com/artifacts/layout/latest/_next/static/ssr/remoteEntry.js",
       },
-      exposes: {},
+      shared: sharedModules,
     }),
   ],
 };
