@@ -20,6 +20,13 @@ const App = ({ i18nInstance, locale }) => {
     setModalOpen(true);
   };
 
+  const userProps = {
+    loading: false,
+    signedIn: false,
+    favoritesCount: 0,
+    openSignInModal: handleOpenSignInModal,
+  };
+
   const handlePersistentLocaleChange = (locale) => {
     !isSSR && localStorage.setItem("locale", locale);
     handleLocaleChange(locale);
@@ -30,27 +37,39 @@ const App = ({ i18nInstance, locale }) => {
     handleRegionChange(region);
   };
 
+  const handleNavigation = (...args) => {
+    console.log('NAVIGATION HANDLER', args);
+  };
+
+  const handleSearch = (...args) => {
+    console.log('HANDLE SEARCH INVOKED:', args);
+  };
+
   return (
     <StrictMode>
       <ThemeProvider>
         <I18nextProvider i18n={i18nInstance}>
           <Layout>
             <Header
-              userProps={{
-                loading: false,
-                signedIn: false,
-                openSignInModal: handleOpenSignInModal,
-              }}
-              logger={mockedLogger}
-              locale={currentLocale}
-              onLocaleChange={(locale) => {
-                handlePersistentLocaleChange(locale);
-                window.location = `/${locale}`;
-              }}
-              region={{ code: currentRegion, disabled: false }}
-              onRegionChange={async (regionCode) => {
-                handlePersistentRegionChange(regionCode);
-              }}
+              // userProps={{
+              //   loading: false,
+              //   signedIn: false,
+              //   openSignInModal: handleOpenSignInModal,
+              // }}
+              // logger={mockedLogger}
+              // locale={currentLocale}
+              // onLocaleChange={(locale) => {
+              //   handlePersistentLocaleChange(locale);
+              //   window.location = `/${locale}`;
+              // }}
+              // region={{ code: currentRegion, disabled: false }}
+              // onRegionChange={async (regionCode) => {
+              //   handlePersistentRegionChange(regionCode);
+              // }}
+              navigate={handleNavigation}
+              locale={locale}
+              userProps={userProps}
+              searchProps={{ onSearch: handleSearch, filters: [] }}
             />
             <Content />
           </Layout>
