@@ -38,49 +38,44 @@ const App = ({ i18nInstance, locale }) => {
   };
 
   const handleNavigation = (...args) => {
-    console.log('NAVIGATION HANDLER', args);
+    console.log("NAVIGATION HANDLER", args);
   };
 
   const handleSearch = (...args) => {
-    console.log('HANDLE SEARCH INVOKED:', args);
+    console.log("HANDLE SEARCH INVOKED:", args);
   };
 
   return (
-    <StrictMode>
-      <ThemeProvider>
-        <I18nextProvider i18n={i18nInstance}>
-          <Layout>
-            <Header
-              // userProps={{
-              //   loading: false,
-              //   signedIn: false,
-              //   openSignInModal: handleOpenSignInModal,
-              // }}
-              // logger={mockedLogger}
-              // locale={currentLocale}
-              // onLocaleChange={(locale) => {
-              //   handlePersistentLocaleChange(locale);
-              //   window.location = `/${locale}`;
-              // }}
-              // region={{ code: currentRegion, disabled: false }}
-              // onRegionChange={async (regionCode) => {
-              //   handlePersistentRegionChange(regionCode);
-              // }}
-              navigate={handleNavigation}
-              locale={locale}
-              userProps={userProps}
-              searchProps={{ onSearch: handleSearch, filters: [] }}
-            />
-            <Content />
-          </Layout>
-
-          <LoginModal
-            onDismiss={() => setModalOpen(false)}
-            isOpen={isModalOpen}
+    // <StrictMode>
+    <ThemeProvider>
+      <I18nextProvider i18n={i18nInstance}>
+        <Layout>
+          <Header
+            logger={mockedLogger}
+            locale={currentLocale}
+            onLocaleChange={(locale) => {
+              handlePersistentLocaleChange(locale);
+              window.location = `/${locale}`;
+            }}
+            // region={{ code: currentRegion, disabled: false }}
+            onRegionChange={async (regionCode) => {
+              handlePersistentRegionChange(regionCode);
+            }}
+            navigate={handleNavigation}
+            userProps={userProps}
+            searchProps={{ onSearch: handleSearch, filters: [] }}
+            // location={null}
           />
-        </I18nextProvider>
-      </ThemeProvider>
-    </StrictMode>
+          <Content />
+        </Layout>
+
+        <LoginModal
+          onDismiss={() => setModalOpen(false)}
+          isOpen={isModalOpen}
+        />
+      </I18nextProvider>
+    </ThemeProvider>
+    // </StrictMode>
   );
 };
 
