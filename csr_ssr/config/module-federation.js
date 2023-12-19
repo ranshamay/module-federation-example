@@ -3,16 +3,17 @@ const { ModuleFederationPlugin } = require("webpack").container;
 const { UniversalFederationPlugin } = require("@module-federation/node");
 
 const sharedModules = {
-
-
-  // react: { singleton: true, requiredVersion: package.dependencies.react },
-  // "react-dom": {
-  //   singleton: true,
-  //   requiredVersion: package.dependencies["react-dom"],
-  // },
+  react: {
+    eager: true,
+    requiredVersion: package.dependencies["react"],
+  },
+  "react-dom": {
+    eager: true,
+    requiredVersion: package.dependencies["react-dom"],
+  },
   "@fluentui/react": {
     singleton: true,
-    requiredVersion: package.dependencies['@fluentui/react'],
+    requiredVersion: package.dependencies["@fluentui/react"],
   },
   i18next: {
     singleton: true,
@@ -28,9 +29,9 @@ module.exports = {
       name: "csr-shell",
       remotes: {
         "@core":
-          "core@http://localhost:4201/_next/static/chunks/remoteEntry.js",
+          "core@https://static.df.cloudmarketplace.microsoft.com/artifacts/core/latest/_next/static/chunks/remoteEntry.js",
         "@layout":
-          "layout@http://localhost:4202/_next/static/chunks/remoteEntry.js",
+          "layout@https://static.df.cloudmarketplace.microsoft.com/artifacts/layout/latest/_next/static/chunks/remoteEntry.js",
       },
       shared: sharedModules,
     }),
@@ -42,9 +43,9 @@ module.exports = {
       isServer: true,
       remotes: {
         "@core":
-          "core@http://localhost:4201/_next/static/ssr/remoteEntry.js",
+          "core@https://static.df.cloudmarketplace.microsoft.com/artifacts/core/latest/_next/static/ssr/remoteEntry.js",
         "@layout":
-          "layout@http://localhost:4202/_next/static/ssr/remoteEntry.js",
+          "layout@https://static.df.cloudmarketplace.microsoft.com/artifacts/layout/latest/_next/static/ssr/remoteEntry.js",
       },
       shared: sharedModules,
     }),

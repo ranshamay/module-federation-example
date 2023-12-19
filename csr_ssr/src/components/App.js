@@ -46,36 +46,34 @@ const App = ({ i18nInstance, locale }) => {
   };
 
   return (
-    // <StrictMode>
-    <ThemeProvider>
-      <I18nextProvider i18n={i18nInstance}>
-        <Layout>
-          <Header
-            logger={mockedLogger}
-            locale={currentLocale}
-            onLocaleChange={(locale) => {
-              handlePersistentLocaleChange(locale);
-              window.location = `/${locale}`;
-            }}
-            // region={{ code: currentRegion, disabled: false }}
-            onRegionChange={async (regionCode) => {
-              handlePersistentRegionChange(regionCode);
-            }}
-            navigate={handleNavigation}
-            userProps={userProps}
-            searchProps={{ onSearch: handleSearch, filters: [] }}
-            // location={null}
-          />
-          <Content />
-        </Layout>
+    <StrictMode>
+      <ThemeProvider>
+        <I18nextProvider i18n={i18nInstance}>
+          <Layout>
+            <Header
+              logger={mockedLogger}
+              locale={currentLocale}
+              onLocaleChange={(locale) => {
+                handlePersistentLocaleChange(locale);
+                window.location = `/${locale}`;
+              }}
+              onRegionChange={async (regionCode) => {
+                handlePersistentRegionChange(regionCode);
+              }}
+              navigate={handleNavigation}
+              userProps={userProps}
+              searchProps={{ onSearch: handleSearch, filters: [] }}
+            />
+            <Content />
+          </Layout>
 
-        <LoginModal
-          onDismiss={() => setModalOpen(false)}
-          isOpen={isModalOpen}
-        />
-      </I18nextProvider>
-    </ThemeProvider>
-    // </StrictMode>
+          <LoginModal
+            onDismiss={() => setModalOpen(false)}
+            isOpen={isModalOpen}
+          />
+        </I18nextProvider>
+      </ThemeProvider>
+    </StrictMode>
   );
 };
 
