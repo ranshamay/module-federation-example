@@ -8,6 +8,8 @@ import LoginModal from "./LoginModal";
 
 const Header = React.lazy(() => import("@layout/Header"));
 
+const isSSR = typeof window === "undefined";
+
 const App = ({ i18nInstance, locale }) => {
   const window = getWindow();
   const [isModalOpen, setModalOpen] = useState(false);
@@ -33,7 +35,7 @@ const App = ({ i18nInstance, locale }) => {
   };
 
   const handlePersistentRegionChange = (region) => {
-    window && localStorage.setItem("region", region);
+    !isSSR && localStorage.setItem("region", region);
     handleRegionChange(region);
   };
 
