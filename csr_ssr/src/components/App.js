@@ -2,8 +2,6 @@ import React, { StrictMode, useState } from "react";
 import { ThemeProvider, getWindow } from "@fluentui/react";
 import { I18nextProvider } from "react-i18next";
 import { mockedLogger } from "../mocks/logger";
-import Layout from "./Layout";
-import Content from "./Content";
 import LoginModal from "./LoginModal";
 
 const Header = React.lazy(() => import("@layout/Header"));
@@ -51,7 +49,6 @@ const App = ({ i18nInstance, locale }) => {
     <StrictMode>
       <ThemeProvider>
         <I18nextProvider i18n={i18nInstance}>
-          <Layout>
             <Header
               logger={mockedLogger}
               locale={currentLocale}
@@ -66,8 +63,6 @@ const App = ({ i18nInstance, locale }) => {
               userProps={userProps}
               searchProps={{ onSearch: handleSearch, filters: [] }}
             />
-            <Content />
-          </Layout>
 
           <LoginModal
             onDismiss={() => setModalOpen(false)}
