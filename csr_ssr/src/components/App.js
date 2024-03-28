@@ -49,20 +49,20 @@ const App = ({ i18nInstance, locale }) => {
     <StrictMode>
       <ThemeProvider>
         <I18nextProvider i18n={i18nInstance}>
-            <Header
-              logger={mockedLogger}
-              locale={currentLocale}
-              onLocaleChange={(locale) => {
-                handlePersistentLocaleChange(locale);
-                window.location = `/${locale}`;
-              }}
-              onRegionChange={async (regionCode) => {
-                handlePersistentRegionChange(regionCode);
-              }}
-              navigate={handleNavigation}
-              userProps={userProps}
-              searchProps={{ onSearch: handleSearch, filters: [] }}
-            />
+          <Header
+            logger={mockedLogger}
+            locale={currentLocale}
+            onLocaleChange={(locale) => {
+              handlePersistentLocaleChange(locale);
+              window.location = `/${locale}`;
+            }}
+            onRegionChange={async (regionCode) => {
+              handlePersistentRegionChange(regionCode);
+            }}
+            navigate={handleNavigation}
+            userProps={userProps}
+            searchProps={{ onSearch: handleSearch, filters: [] }}
+          />
 
           <LoginModal
             onDismiss={() => setModalOpen(false)}
